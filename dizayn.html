@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Набор ДИЗАЙН</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one narrow reading column, sticky progress bar, four anchored sections (checklist, steps, prompts, texts). Twitch palette: black, lime, violet, white. */
+:root{
+  --bg:#0c0b10; --surface:#16141d; --surface-2:#1f1c29; --line:#2d2a3a;
+  --fg:#f5f4fa; --muted:#aeabc0; --lime:#d0ff00; --violet:#8116e0; --violet-hi:#a55cf0;
+  --font-display:'Montserrat','Arial Black',system-ui,sans-serif;
+  --font-body:'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:#0c0b10}
+body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-weight:500;font-size:16px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+.wrap{max-width:720px;margin:0 auto;min-width:0}
+a{color:var(--lime)}
+a:focus-visible,button:focus-visible,input:focus-visible+.box{outline:3px solid var(--lime);outline-offset:3px}
+
+/* top bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:14px;padding:10px 0;margin:0 calc(-1*max(16px,env(safe-area-inset-left,0px)))}
+.bar-in{max-width:720px;width:100%;margin:0 auto;display:flex;align-items:center;gap:14px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{font-family:var(--font-display);font-weight:800;letter-spacing:.04em;font-size:14px;color:var(--lime)}
+.meter{flex:1;height:8px;background:var(--surface-2);border-radius:99px;overflow:hidden;min-width:0}
+.meter i{display:block;height:100%;width:0;background:var(--lime);border-radius:99px;transition:width .25s}
+.count{font-variant-numeric:tabular-nums;font-size:13px;color:var(--muted);white-space:nowrap}
+
+/* hero */
+.hero{padding:44px 0 28px}
+.tag{display:inline-block;background:var(--violet);color:#fff;font-weight:800;font-size:13px;letter-spacing:.12em;text-transform:uppercase;padding:6px 12px;border-radius:6px}
+h1{font-family:var(--font-display);font-weight:800;font-size:clamp(52px,17vw,116px);line-height:.95;letter-spacing:-.02em;margin:16px 0 14px;color:var(--lime);text-wrap:balance}
+.lead{font-size:18px;max-width:34em;margin:0 0 20px}
+.nav{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0;padding:0;list-style:none}
+.nav a{display:block;text-decoration:none;color:var(--fg);border:1px solid var(--line);background:var(--surface);padding:9px 14px;border-radius:99px;font-size:14px;font-weight:600}
+.nav a:hover{border-color:var(--lime)}
+
+section{padding-top:44px}
+h2{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,6vw,38px);line-height:1.1;margin:0 0 10px;text-wrap:balance}
+.sub{color:var(--muted);margin:0 0 22px;max-width:38em}
+h3{font-family:var(--font-display);font-weight:800;font-size:18px;margin:0}
+
+/* checklist */
+.group{border-top:1px solid var(--line);padding:18px 0 6px}
+.ghead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.spec{font-family:var(--font-mono);font-size:13px;color:#fff;background:var(--violet);padding:3px 9px;border-radius:5px}
+.item{position:relative;display:flex;gap:14px;align-items:flex-start;padding:10px 0;cursor:pointer;min-width:0}
+.item input{position:absolute;opacity:0;width:1px;height:1px}
+.box{flex:none;width:26px;height:26px;border:2px solid var(--violet-hi);border-radius:7px;margin-top:1px;display:grid;place-items:center;transition:background .15s,border-color .15s}
+.box svg{width:16px;height:16px;opacity:0}
+.item input:checked+.box{background:var(--lime);border-color:var(--lime)}
+.item input:checked+.box svg{opacity:1}
+.item input:checked~.txt{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--violet-hi)}
+.txt{min-width:0}
+
+/* steps */
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;min-width:0}
+.step h3{margin-bottom:6px}
+.step p{margin:0 0 8px}
+.step p:last-child{margin:0}
+.path{font-family:var(--font-mono);font-size:13.5px;background:var(--surface-2);border-radius:8px;padding:9px 12px;display:block;overflow-x:auto;color:var(--lime)}
+
+/* prompts */
+.pbox{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin:0 0 14px;overflow:hidden;min-width:0}
+.phead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;background:var(--surface-2);flex-wrap:wrap}
+.phead b{font-family:var(--font-display);font-weight:800;font-size:15px}
+.phead small{display:block;color:var(--muted);font-weight:500;font-size:13px}
+.copy{border:0;background:var(--lime);color:#0c0b10;font-family:var(--font-body);font-weight:800;font-size:14px;padding:9px 16px;border-radius:99px;cursor:pointer;min-height:40px}
+.copy:active{transform:scale(.97)}
+.copy.done{background:#fff}
+.pr{margin:0;padding:14px;font-family:var(--font-mono);font-size:13.5px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--fg)}
+.pr mark{background:transparent;color:var(--lime)}
+.note{color:var(--muted);font-size:14.5px;margin:4px 0 0}
+
+/* texts */
+.tgrid{display:grid;gap:14px}
+.mini{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:14px;list-style:none}
+.mini li{background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:7px 12px;font-weight:800;font-size:14px}
+
+.end{margin-top:52px;border-top:1px solid var(--line);padding-top:26px;color:var(--muted)}
+.end strong{color:var(--fg)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="bar"><div class="bar-in"><span class="brand">ДИЗАЙН</span><div class="meter" aria-hidden="true"><i id="fill"></i></div><span class="count" id="count" aria-live="polite">0 из 20</span></div></div>
+
+<div class="wrap">
+<header class="hero">
+  <span class="tag">набор Айзы</span>
+  <h1>ДИЗАЙН</h1>
+  <p class="lead">Мой Twitch выглядел как заброшенный склад. Я переделала его за вечер без дизайнера. Здесь всё, что для этого нужно: чек-лист, инструкция, промпты и шаблоны текстов.</p>
+  <p class="note">Начать можно с бесплатной Канвы (Canva, сайт для дизайна) и любой нейросети (neural network, программа, которая делает картинки и тексты).</p>
+  <ul class="nav">
+    <li><a href="#checklist">Чек-лист</a></li>
+    <li><a href="#steps">Инструкция</a></li>
+    <li><a href="#prompts">Промпты</a></li>
+    <li><a href="#texts">Шаблоны текстов</a></li>
+  </ul>
+</header>
+
+<section id="checklist">
+  <h2>Чек-лист</h2>
+  <p class="sub">Отмечай галочками. Прогресс хранится в твоём браузере, так что можно закрыть страницу и вернуться.</p>
+
+  <div class="group" data-g="A"><div class="ghead"><h3>Стиль</h3><span class="spec">10 минут</span></div>
+    <label class="item"><input type="checkbox" data-k="a1"><span class="box"><svg viewBox="0 0 16 16" fill="none" stroke="#0c0b10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.3 3.2L13 4.5"/></svg></span><span class="txt">Описала стиль одним предложением: настроение, три цвета, один символ (у меня: пастель, облака, хромовые буквы, спящий котик)</span></label>
+    <label class="item"><input type="checkbox" data-k="a2"><span class="box"><svg viewBox="0 0 16 16" fill="none" stroke="#0c0b10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.3 3.2L13 4.5"/></svg></span><span class="txt">Собрала 5–10 референсов (reference, картинки-образцы) в одну папку</span></label>
+    <label class="item"><input type="checkbox" data-k="a3"><span class="box"><svg viewBox="0 0 16 16" fill="none" stroke="#0c0b10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.3 3.2L13 4.5"/></svg></span><span class="txt">Выбрала одно своё фото: лицо видно целиком, свет мягкий</span></label>
+  </div>
+
+  <div class="group" data-g="B"><div class="ghead"><h3>Аватарка</h3><span class="spec">512 × 512</span></div>
+    <label class="item"><input type="checkbox" data-k="b1"><span class="box"><svg viewBox="0 0 16 16" fill="none" stroke="#0c0b10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.3 3.2L13 4.5"/></svg></span><span class="txt">Сгенерировала 3–5 вариантов по промпту 2</span></label>
+    <label class="item"><input type="checkbox" data-k="b2"><span class="box"><svg viewBox="0 0 16 16" fill="none" stroke="#0c0b10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.3 3.2L13 4.5"/></svg></span><span class="txt">Выбрала один, обрезала в квадрат, лицо по центру</span></label>
+    <label class="item"><input type="checkbox" data-k="b3"><span class="box"><svg viewBox="0 0 16 16" fill="none" stroke="#0c0b10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.3 3.2L13 4.5"/></svg></span><span class="txt">Уменьшила до кружка в 40 пикселей: лицо всё ещё читается</span></label>
+  </div>
+
+  <div class="group" data-g="C"><div class="ghead"><h3>Баннер профиля</h3><span class="spec">1200 × 480</span></div>
+    <label class="item"><input type="checkbox" data-k="c1"><span class="box"><svg viewBox="0 0 16 16" fill="none" stroke="#0c0b10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.3 3.2L13 4.5"/></svg></span><span class="txt">Главное держу ближе к центру: по краям Twitch и телефон обрезают</span></label>
+    <label class="item"><input type="checkbox" data-k="c2"><span class="box"><svg viewBox="0 0 16 16" fill="none" stroke="#0c0b10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.3 3.2L13 4.5"/></svg></span><span class="txt">Аватарка и ник не закрывают рисунок</span></label>
+    <label class="item"><input type="checkbox" data-k="c3"><span class="box"><svg viewBox="0 0 16 16" fill="none" stroke="#0c0b10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.3 3.2L13 4.5"/></svg></span><span class="txt">Цвета те же, что на аватарке</span></label>
+  </div>
+
+  <div class="group" data-g="D"><div class="ghead"><h3>Заставка «Скоро начнём»</h3><span class="spec">1920 × 1080</span></div>
+    <label class="item"><input type="checkbox" data-k="d1"><span class="box"><svg viewBox="0 0 16 16" fill="none" stroke="#0c0b10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.3 3.2L13 4.5"/></svg></span><span class="txt">Надпись из двух-трёх слов, крупно</span></label>
+    <label class="item"><input type="checkbox" data-k="d2"><span class="box"><svg viewBox="0 0 16 16" fill="none" stroke="#0c0b10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.3 3.2L13 4.5"/></svg></span><span class="txt">Надпись добавила в Канве, а не просила у нейросети: кириллицу она часто ломает</span></label>
+    <label class="item"><input type="checkbox" data-k="d3"><span class="box"><svg viewBox="0 0 16 16" fill="none" stroke="#0c0b10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.3 3.2L13 4.5"/></svg></span><span class="txt">Тот же персонаж и та же палитра, что на аватарке и баннере</span></label>
+  </div>
+
+  <div class="group" data-g="E"><div class="ghead"><h3>Загрузка на Twitch</h3><span class="spec">Бренд</span></div>
+    <label class="item"><input type="checkbox" data-k="e1"><span class="box"><svg viewBox="0 0 16 16" fill="none" stroke="#0c0b10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.3 3.2L13 4.5"/></svg></span><span class="txt">Открыла Панель управления автора, Настройки, Канал, вкладка «Бренд»</span></label>
+    <label class="item"><input type="checkbox" data-k="e2"><span class="box"><svg viewBox="0 0 16 16" fill="none" stroke="#0c0b10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.3 3.2L13 4.5"/></svg></span><span class="txt">Загрузила «Изображение профиля» (аватарку)</span></label>
+    <label class="item"><input type="checkbox" data-k="e3"><span class="box"><svg viewBox="0 0 16 16" fill="none" stroke="#0c0b10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.3 3.2L13 4.5"/></svg></span><span class="txt">Загрузила «Баннер профиля» и нажала «Сохранить»</span></label>
+    <label class="item"><input type="checkbox" data-k="e4"><span class="box"><svg viewBox="0 0 16 16" fill="none" stroke="#0c0b10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.3 3.2L13 4.5"/></svg></span><span class="txt">Загрузила «Баннер видеопроигрывателя» (это заставка, Twitch просит 1920 × 1080 и не больше 10 МБ)</span></label>
+    <label class="item"><input type="checkbox" data-k="e5"><span class="box"><svg viewBox="0 0 16 16" fill="none" stroke="#0c0b10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.3 3.2L13 4.5"/></svg></span><span class="txt">Подобрала «Акцентный цвет профиля» под свою палитру</span></label>
+  </div>
+
+  <div class="group" data-g="F"><div class="ghead"><h3>Финал</h3><span class="spec">5 минут</span></div>
+    <label class="item"><input type="checkbox" data-k="f1"><span class="box"><svg viewBox="0 0 16 16" fill="none" stroke="#0c0b10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.3 3.2L13 4.5"/></svg></span><span class="txt">Открыла канал с телефона и с компьютера</span></label>
+    <label class="item"><input type="checkbox" data-k="f2"><span class="box"><svg viewBox="0 0 16 16" fill="none" stroke="#0c0b10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.3 3.2L13 4.5"/></svg></span><span class="txt">Проверила экран «не в сети»: заставка на месте</span></label>
+    <label class="item"><input type="checkbox" data-k="f3"><span class="box"><svg viewBox="0 0 16 16" fill="none" stroke="#0c0b10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.3 3.2L13 4.5"/></svg></span><span class="txt">Написала описание канала по шаблону ниже</span></label>
+  </div>
+</section>
+
+<section id="steps">
+  <h2>Инструкция на один вечер</h2>
+  <p class="sub">Пять шагов. Если застряла, вернись к чек-листу и найди, что пропустила.</p>
+  <ol class="steps">
+    <li class="step"><h3>1. Придумай стиль</h3>
+      <p>Одно предложение по формуле: настроение, три цвета, главный символ. Без этого нейросеть выдаст кашу.</p>
+      <p>Отправь его вместе с референсами в чат нейросети и попроси сделать промпты (prompt, текстовая команда). Готовый запрос лежит ниже, это промпт 1.</p></li>
+    <li class="step"><h3>2. Сделай аватарку</h3>
+      <p>Загрузи своё фото в генератор картинок. В Канве есть встроенный, подойдёт и любая другая нейросеть. Вставь промпт 2.</p>
+      <p>Делай 3–5 вариантов и бери тот, где тебя можно узнать.</p></li>
+    <li class="step"><h3>3. Собери баннер</h3>
+      <p>В Канве создай дизайн своего размера: 1200 × 480. Положи персонажа ближе к центру, фон возьми из той же палитры.</p></li>
+    <li class="step"><h3>4. Сделай заставку</h3>
+      <p>Сгенерируй фон по промпту 3 без текста, потом открой его в Канве (размер 1920 × 1080) и добавь надпись любым жирным шрифтом с кириллицей.</p></li>
+    <li class="step"><h3>5. Загрузи и проверь</h3>
+      <p>Дальше по пунктам:</p>
+      <code class="path">Панель управления автора → Настройки → Канал → Бренд</code>
+      <p>Там три места под картинки и акцентный цвет. После сохранения открой канал в новой вкладке и проверь с телефона.</p></li>
+  </ol>
+</section>
+
+<section id="prompts">
+  <h2>Промпты</h2>
+  <p class="sub">Всё в квадратных скобках замени на своё. Нажми «Копировать» и вставь в нейросеть.</p>
+
+  <div class="pbox">
+    <div class="phead"><b>Промпт 1<small>в текстовую нейросеть, чтобы получить стиль и остальные промпты</small></b><button class="copy" type="button">Копировать</button></div>
+    <pre class="pr">Я начинающий стример на Twitch. Буду играть в [игры или жанр]. Мне нужен единый стиль оформления канала.
+Настроение: [уютное / дерзкое / ироничное].
+Главные цвета: [цвет 1, цвет 2, цвет 3].
+Главный символ или маскот: [например, спящий котик].
+
+Сделай:
+1) описание стиля в трёх предложениях;
+2) палитру с кодами HEX;
+3) два шрифта с кириллицей из Google Fonts;
+4) три промпта для генератора картинок на английском: аватарка, баннер, заставка «Скоро начнём». В промптах не должно быть текста на картинке.</pre>
+  </div>
+
+  <div class="pbox">
+    <div class="phead"><b>Промпт 2<small>аватарка по твоему фото</small></b><button class="copy" type="button">Копировать</button></div>
+    <pre class="pr">Use the attached photo as a reference for the face and hairstyle. Create a glossy 3D doll-style character avatar: [hair description], [headphones or another accessory], [outfit]. Pastel palette: [color 1], [color 2], [color 3]. Soft studio lighting, smooth skin, large expressive eyes, simple clean background in the palette colors, face centered, square 1:1 composition, no text.</pre>
+  </div>
+
+  <div class="pbox">
+    <div class="phead"><b>Промпт 3<small>фон для заставки «Скоро начнём»</small></b><button class="copy" type="button">Копировать</button></div>
+    <pre class="pr">Wide 16:9 "starting soon" stream screen in a glossy 3D style: [character or mascot, e.g. a sleeping kitten with a halo] resting on [clouds / neon city / cozy room], pastel palette [color 1], [color 2], [color 3], soft glow, small sparkles, large empty space in the center for a title, no text on the image.</pre>
+  </div>
+  <p class="note">Надпись «СКОРО НАЧНЁМ» добавляй уже в Канве. Нейросети путают русские буквы.</p>
+</section>
+
+<section id="texts">
+  <h2>Шаблоны текстов</h2>
+  <p class="sub">Копируй, меняй скобки, вставляй. Описание канала лучше уложить в 300 знаков.</p>
+  <div class="tgrid">
+
+  <div class="pbox"><div class="phead"><b>Описание канала, вариант 1</b><button class="copy" type="button">Копировать</button></div>
+    <pre class="pr">Привет, я [имя]. Стримлю [игры] и смеюсь над багами. Заходи, когда хочется уюта и шуток. Старт: [дата].</pre></div>
+
+  <div class="pbox"><div class="phead"><b>Описание канала, вариант 2</b><button class="copy" type="button">Копировать</button></div>
+    <pre class="pr">[Игра], [игра] и немного хаоса. Я [имя], комментирую всё, что происходит на экране. Чат здесь часть шоу.</pre></div>
+
+  <div class="pbox"><div class="phead"><b>Описание канала, вариант 3</b><button class="copy" type="button">Копировать</button></div>
+    <pre class="pr">Стримы по расписанию: [дни и время]. Играем в [игры], болтаем в чате. Подпишись, чтобы не пропустить старт.</pre></div>
+
+  <div class="pbox"><div class="phead"><b>Панель «Обо мне»</b><button class="copy" type="button">Копировать</button></div>
+    <pre class="pr">Привет! Я [имя]. Играю в [игры]. Люблю [три вещи про тебя]. Чат у нас уютный, шутки приветствуются.</pre></div>
+
+  <div class="pbox"><div class="phead"><b>Панель «Правила чата»</b><button class="copy" type="button">Копировать</button></div>
+    <pre class="pr">1. Будь добрее, чем интернет.
+2. Без спама и рекламы.
+3. Спойлеры не пишем.
+4. Мемы и шутки про баги приветствуются.</pre></div>
+
+  <div class="pbox"><div class="phead"><b>Панель «Расписание»</b><button class="copy" type="button">Копировать</button></div>
+    <pre class="pr">[Дни] в [время] по [часовой пояс]. Если планы меняются, пишу в Instagram: [твой ник].</pre></div>
+
+  <div class="pbox"><div class="phead"><b>Название стрима, формулы</b><button class="copy" type="button">Копировать</button></div>
+    <pre class="pr">Ломаем [игра] до багов. Чат рулит
+[Игра], но [условие]. Получится или нет?
+Первый раз в [игра]: что может пойти не так</pre></div>
+
+  <div class="pbox"><div class="phead"><b>Надписи для заставок</b><button class="copy" type="button">Копировать</button></div>
+    <ul class="mini" aria-label="Надписи"><li>СКОРО НАЧНЁМ</li><li>СЕЙЧАС ВЕРНУСЬ</li><li>СТРИМ ОКОНЧЕН</li><li>ДО ВСТРЕЧИ</li></ul>
+    <pre class="pr" hidden>СКОРО НАЧНЁМ
+СЕЙЧАС ВЕРНУСЬ
+СТРИМ ОКОНЧЕН
+ДО ВСТРЕЧИ</pre></div>
+  </div>
+</section>
+
+<footer class="end">
+  <p><strong>Получилось?</strong> Покажи результат, отметь меня в Instagram <a href="https://www.instagram.com/aizvazovsky/" target="_blank" rel="noopener">aizvazovsky</a>. Мой канал: <a href="https://www.twitch.tv/aizvazovsky" target="_blank" rel="noopener">twitch.tv/aizvazovsky</a>.</p>
+</footer>
+</div>
+
+<script>
+(function(){
+  var KEY='dizayn-check-v1', boxes=[].slice.call(document.querySelectorAll('.item input'));
+  var state={};
+  try{ state=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ state={}; }
+  function paint(){
+    var n=boxes.filter(function(b){return b.checked}).length;
+    document.getElementById('fill').style.width=(n/boxes.length*100)+'%';
+    document.getElementById('count').textContent=n+' из '+boxes.length;
+  }
+  boxes.forEach(function(b){
+    b.checked=!!state[b.dataset.k];
+    b.addEventListener('change',function(){
+      state[b.dataset.k]=b.checked;
+      try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){}
+      paint();
+    });
+  });
+  paint();
+
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  [].slice.call(document.querySelectorAll('pre.pr')).forEach(function(p){
+    var raw=p.textContent.replace(/^\n+|\s+$/g,''); p.dataset.raw=raw;
+    p.innerHTML=esc(raw).replace(/\[([^\]]+)\]/g,'<mark>[$1]</mark>');
+  });
+  function fallback(el){
+    var r=document.createRange(); r.selectNodeContents(el); var s=window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  }
+  [].slice.call(document.querySelectorAll('.copy')).forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var box=btn.closest('.pbox'), pre=box.querySelector('pre.pr'), text=pre.dataset.raw;
+      function ok(){ btn.textContent='Скопировано'; btn.classList.add('done'); setTimeout(function(){btn.textContent='Копировать'; btn.classList.remove('done');},1600); }
+      function bad(){ if(pre.hidden){pre.hidden=false;} fallback(pre); btn.textContent='Выдели и скопируй'; }
+      try{
+        if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(ok,bad); }
+        else bad();
+      }catch(e){ bad(); }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
